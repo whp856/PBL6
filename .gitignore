@@ -1,2 +1,8 @@
-venv/ 
+*.pyc
 __pycache__/
+venv/
+.env
+.vscode/
+.idea/
+# 忽略 Docker 的持久化数据目录
+db_data/
