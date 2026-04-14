@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>莫兰迪 3D 登录页面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #d4a5a5 0%, #a8b5a8 50%, #a8a8b5 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* 背景装饰球 */
+        .decoration {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .decoration-1 {
+            width: 400px;
+            height: 400px;
+            background: #d4a5a5;
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .decoration-2 {
+            width: 300px;
+            height: 300px;
+            background: #a8b5a8;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 2s;
+        }
+
+        .decoration-3 {
+            width: 200px;
+            height: 200px;
+            background: #b5a8a8;
+            top: 50%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+            75% {
+                transform: translate(20px, 30px) scale(1.05);
+            }
+        }
+
+        /* 主容器 */
+        .container {
+            position: relative;
+            width: 400px;
+            height: 650px;
+            perspective: 1000px;
+            z-index: 1;
+        }
+
+        /* 3D 卡片 */
+        .card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* 卡片正反面 */
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 30px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 10px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* 卡片正面 */
+        .card-front {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f0 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            z-index: 2;
+        }
+
+        /* 卡片背面 */
+        .card-back {
+            background: linear-gradient(145deg, #f5f5f0 0%, #ffffff 100%);
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            transform: rotateY(180deg);
+            z-index: 1;
+        }
+
+        /* 标题样式 */
+        .title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #5c5c5c;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #8b8b8b;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* 社交媒体登录 */
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            color: #5c5c5c;
+        }
+
+        .social-btn:hover {
+            transform: scale(1.15) translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .social-btn.github:hover {
+            border-color: #5c5c5c;
+            color: #5c5c5c;
+        }
+
+        .social-btn.google:hover {
+            border-color: #db4437;
+            color: #db4437;
+        }
+
+        /* 分割线 */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            color: #aaa;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-size: 0.85rem;
+        }
+
+        /* 表单 */
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: #5c5c5c;
+            background: #fafafa;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-field::placeholder {
+            color: #aaa;
+        }
+
+        .input-field:focus {
+            border-color: #a8b5a8;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(168, 181, 168, 0.1);
+        }
+
+        /* 按钮 */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #a8b5a8 0%, #8fa88f 100%);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(168, 181, 168, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* 切换按钮 */
+        .toggle-btn {
+            margin-top: 20px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fff;
+            color: #8b8b8b;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            border-color: #a8b5a8;
+            color: #5c5c5c;
+            background: #fafafa;
+        }
+
+        /* 忘记密码 */
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .forgot-password a {
+            color: #a8b5a8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #8b8b8b;
+        }
+
+        /* 输入框动画 */
+        .input-field {
+            animation: inputAppear 0.5s ease-out forwards;
+        }
+
+        .input-group:nth-child(1) .input-field {
+            animation-delay: 0.1s;
+        }
+
+        .input-group:nth-child(2) .input-field {
+            animation-delay: 0.2s;
+        }
+
+        .input-group:nth-child(3) .input-field {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes inputAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 按钮出现动画 */
+        .submit-btn {
+            animation: buttonAppear 0.6s ease-out forwards;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes buttonAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 社交按钮动画 */
+        .social-btn {
+            animation: socialBtnAppear 0.5s ease-out forwards;
+        }
+
+        .social-btn:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .social-btn:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes socialBtnAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* 标题动画 */
+        .title,
+        .subtitle {
+            animation: fadeInDown 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 450px) {
+            .container {
+                width: 350px;
+                height: 520px;
+            }
+
+            .card-front,
+            .card-back {
+                padding: 30px;
+            }
+
+            .title {
+                font-size: 1.75rem;
+            }
+
+            .input-field {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+
+            .social-btn {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        /* 卡片翻转时的淡入淡出 */
+        .card-face {
+            transition: opacity 0.3s ease;
+        }
+
+        .card.flipped .card-front {
+            opacity: 0.5;
+        }
+
+        .card.flipped .card-back {
+            opacity: 1;
+        }
+
+        .card:not(.flipped) .card-back {
+            opacity: 0.5;
+        }
+
+        .card:not(.flipped) .card-front {
+            opacity: 1;
+        }
+
+        /* 3D 光泽效果 */
+        .card-face::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            pointer-events: none;
+            border-radius: 30px 30px 0 0;
+        }
+
+        /* 图标SVG样式 */
+        .social-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+    <div class="decoration decoration-3"></div>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <div class="card" id="card">
+            <!-- 正面 - 登录 -->
+            <div class="card-face card-front">
+                <h1 class="title">欢迎回来</h1>
+                <p class="subtitle">登录您的账户</p>
+
+                <!-- 社交媒体登录 -->
+                <div class="social-login">
+                    <button class="social-btn github" title="GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.05-.015-2.055-3.33.72-4.035-1.605-4.035-1.605-.54-1.38-1.32-1.755-1.32-1.755-1.09-.735.09-.72.09-.72 1.2.09 1.83 1.245 1.83 1.245 1.065 1.83 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                    </button>
+                    <button class="social-btn google" title="Google">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="divider">
+                    <span>或使用邮箱</span>
+                </div>
+
+                <!-- 登录表单 -->
+                <form class="form" id="loginForm">
+                    <div class="input-group">
+                        <input type="email" class="input-field" placeholder="邮箱地址" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" class="input-field" placeholder="密码" required>
+                    </div>
+                    <button type="submit" class="submit-btn">登录</button>
+                </form>
+
+                <div class="forgot-password">
+                    <a href="#">忘记密码?</a>
+                </div>
+
+                <button class="toggle-btn" id="toRegister">还没有账户？去注册</button>
+            </div>
+
+            <!-- 背面 - 注册 -->
+            <div class="card-face card-back">
+                <h1 class="title">创建账户</h1>
+                <p class="subtitle">开始您的旅程</p>
+
+                <!-- 社交媒体注册 -->
+                <div class="social-login">
+                    <button class="social-btn github" title="GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.05-.015-2.055-3.33.72-4.035-1.605-4.035-1.605-.54-1.38-1.32-1.755-1.32-1.755-1.09-.735.09-.72.09-.72 1.2.09 1.83 1.245 1.83 1.245 1.065 1.83 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                    </button>
+                    <button class="social-btn google" title="Google">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="divider">
+                    <span>或使用邮箱注册</span>
+                </div>
+
+                <!-- 注册表单 -->
+                <form class="form" id="registerForm">
+                    <div class="input-group">
+                        <input type="text" class="input-field" placeholder="用户名" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" class="input-field" placeholder="邮箱地址" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" class="input-field" placeholder="密码" required>
+                    </div>
+                    <button type="submit" class="submit-btn">注册</button>
+                </form>
+
+                <button class="toggle-btn" id="toLogin">已有账户？去登录</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 获取元素
+        const card = document.getElementById('card');
+        const container = document.querySelector('.container');
+        const toRegisterBtn = document.getElementById('toRegister');
+        const toLoginBtn = document.getElementById('toLogin');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+
+        // 原生 3D 倾斜效果实现
+        let isFlipped = false;
+        let currentRotateX = 0;
+        let currentRotateY = 0;
+        let targetRotateX = 0;
+        let targetRotateY = 0;
+
+        // 鼠标移动事件
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const mouseX = e.clientX - centerX;
+            const mouseY = e.clientY - centerY;
+
+            // 计算旋转角度 (限制最大角度为 15 度)
+            targetRotateY = (mouseX / (rect.width / 2)) * 15;
+            targetRotateX = -(mouseY / (rect.height / 2)) * 15;
+
+            updateCardTransform();
+        });
+
+        // 鼠标离开时恢复
+        container.addEventListener('mouseleave', () => {
+            targetRotateX = 0;
+            targetRotateY = 0;
+            updateCardTransform();
+        });
+
+        // 更新卡片变换
+        function updateCardTransform() {
+            // 使用缓动函数使动画更平滑
+            currentRotateX += (targetRotateX - currentRotateX) * 0.1;
+            currentRotateY += (targetRotateY - currentRotateY) * 0.1;
+
+            const baseRotateY = isFlipped ? 180 : 0;
+            card.style.transform = `rotateX(${currentRotateX}deg) rotateY(${baseRotateY + currentRotateY}deg)`;
+
+            // 继续动画循环直到接近目标值
+            if (Math.abs(targetRotateX - currentRotateX) > 0.1 || 
+                Math.abs(targetRotateY - currentRotateY) > 0.1) {
+                requestAnimationFrame(updateCardTransform);
+            }
+        }
+
+        // 切换到注册
+        toRegisterBtn.addEventListener('click', () => {
+            isFlipped = true;
+            card.classList.add('flipped');
+            
+            // 重置动画
+            currentRotateX = 0;
+            currentRotateY = 0;
+            targetRotateX = 0;
+            targetRotateY = 0;
+            updateCardTransform();
+        });
+
+        // 切换到登录
+        toLoginBtn.addEventListener('click', () => {
+            isFlipped = false;
+            card.classList.remove('flipped');
+            
+            // 重置动画
+            currentRotateX = 0;
+            currentRotateY = 0;
+            targetRotateX = 0;
+            targetRotateY = 0;
+            updateCardTransform();
+        });
+
+        // 登录表单提交
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = loginForm.querySelector('input[type="email"]').value;
+            const password = loginForm.querySelector('input[type="password"]').value;
+            
+            // 模拟登录成功
+            alert(`登录成功！\n邮箱: ${email}`);
+        });
+
+        // 注册表单提交
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = registerForm.querySelector('input[type="text"]').value;
+            const email = registerForm.querySelector('input[type="email"]').value;
+            const password = registerForm.querySelector('input[type="password"]').value;
+            
+            // 模拟注册成功
+            alert(`注册成功！\n用户名: ${username}\n邮箱: ${email}`);
+            
+            // 自动切换到登录
+            isFlipped = false;
+            card.classList.remove('flipped');
+            currentRotateX = 0;
+            currentRotateY = 0;
+            targetRotateX = 0;
+            targetRotateY = 0;
+            updateCardTransform();
+        });
+
+        // 社交媒体登录按钮点击
+        document.querySelectorAll('.social-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const platform = btn.classList.contains('github') ? 'GitHub' : 'Google';
+                alert(`点击了 ${platform} 登录（演示功能）`);
+            });
+        });
+
+        // 添加触摸支持（移动端）
+        container.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const rect = container.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const touchX = touch.clientX - centerX;
+            const touchY = touch.clientY - centerY;
+
+            targetRotateY = (touchX / (rect.width / 2)) * 15;
+            targetRotateX = -(touchY / (rect.height / 2)) * 15;
+
+            updateCardTransform();
+        });
+
+        container.addEventListener('touchend', () => {
+            targetRotateX = 0;
+            targetRotateY = 0;
+            updateCardTransform();
+        });
+
+        // 初始化
+        updateCardTransform();
+    </script>
+</body>
+</html>
