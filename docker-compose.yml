@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   web:
     build: .
@@ -7,9 +5,8 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    environment:
-      - DEBUG=1
-      - DATABASE_URL=mysql://root:password@db:3306/pbl6
+    env_file:
+      - .env
     volumes:
       - .:/app
 
