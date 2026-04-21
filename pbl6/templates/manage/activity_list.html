@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动列表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header div {
+            display: flex;
+            gap: 10px;
+        }
+        .header a {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .header a:hover {
+            background-color: #45a049;
+        }
+        .header a:first-child {
+            background-color: #0066cc;
+        }
+        .header a:first-child:hover {
+            background-color: #0052a3;
+        }
+        .filter-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .filter-form h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-actions {
+            margin-top: 15px;
+        }
+        .form-actions button {
+            background-color: #0066cc;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-actions button:hover {
+            background-color: #0052a3;
+        }
+        .activity-list {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .activity-list h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .activity-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        .activity-item h3 {
+            margin: 0 0 10px 0;
+        }
+        .activity-item h3 a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .activity-item h3 a:hover {
+            text-decoration: underline;
+        }
+        .activity-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .activity-description {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .activity-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-draft {
+            background-color: #ffc107;
+            color: #333;
+        }
+        .status-published {
+            background-color: #28a745;
+            color: white;
+        }
+        .status-cancelled {
+            background-color: #dc3545;
+            color: white;
+        }
+        .activity-actions {
+            margin-top: 10px;
+        }
+        .activity-actions a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .action-edit {
+            background-color: #0066cc;
+            color: white;
+        }
+        .action-edit:hover {
+            background-color: #0052a3;
+        }
+        .action-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+        .action-delete:hover {
+            background-color: #c82333;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination a {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #0066cc;
+        }
+        .pagination a:hover {
+            background-color: #f5f5f5;
+        }
+        .pagination .current {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: 1px solid #0066cc;
+            border-radius: 4px;
+            background-color: #0066cc;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>活动列表</h1>
+            <div>
+                <a href="{% url 'profile' %}">个人信息</a>
+                <a href="{% url 'activity-create' %}">发布新活动</a>
+            </div>
+        </div>
+        
+        <div class="filter-form">
+            <h2>筛选条件</h2>
+            <form method="get">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="search">关键词搜索:</label>
+                        <input type="text" id="search" name="search" value="{{ request.GET.search }}" placeholder="输入活动标题或描述">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">活动状态:</label>
+                        <select id="status" name="status">
+                            <option value="">全部</option>
+                            <option value="draft" {% if request.GET.status == 'draft' %}selected{% endif %}>草稿</option>
+                            <option value="published" {% if request.GET.status == 'published' %}selected{% endif %}>已发布</option>
+                            <option value="cancelled" {% if request.GET.status == 'cancelled' %}selected{% endif %}>已取消</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="start_date">开始日期:</label>
+                        <input type="date" id="start_date" name="start_date" value="{{ request.GET.start_date }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">结束日期:</label>
+                        <input type="date" id="end_date" name="end_date" value="{{ request.GET.end_date }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="activity_type">活动类型:</label>
+                        <select id="activity_type" name="activity_type">
+                            <option value="">全部</option>
+                            {% for type in activity_types %}
+                            <option value="{{ type }}" {% if request.GET.activity_type == type %}selected{% endif %}>{{ type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit">筛选</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="activity-list">
+            <h2>活动列表</h2>
+            {% if activities %}
+                {% for activity in activities %}
+                <div class="activity-item">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3><a href="{% url 'activity-detail' activity.id %}">{{ activity.title }}</a></h3>
+                        <span class="activity-status {% if activity.status == 'draft' %}status-draft{% elif activity.status == 'published' %}status-published{% else %}status-cancelled{% endif %}">{{ activity.get_status_display }}</span>
+                    </div>
+                    <div class="activity-meta">
+                        <span>时间: {{ activity.start_time }} 至 {{ activity.end_time }}</span>
+                        <span>地点: {{ activity.location }}</span>
+                        <span>类型: {{ activity.activity_type }}</span>
+                        <span>最大参与人数: {% if activity.max_participants > 0 %}{{ activity.max_participants }}{% else %}无限制{% endif %}</span>
+                        <span>发布时间: {{ activity.created_at }}</span>
+                    </div>
+                    <div class="activity-description">
+                        {{ activity.description|truncatechars:200 }}
+                    </div>
+                    <div class="activity-actions">
+                        <a href="{% url 'activity-edit' activity.id %}" class="action-edit">编辑</a>
+                        <a href="{% url 'activity-delete' activity.id %}" class="action-delete">删除</a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>暂无活动</p>
+            {% endif %}
+            
+            <!-- 分页 -->
+            {% if is_paginated %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1{% if request.GET %}&{{ request.GET.urlencode }}{% endif %}">首页</a>
+                        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET %}&{{ request.GET.urlencode }}{% endif %}">上一页</a>
+                    {% endif %}
+                    
+                    <span class="current">
+                        第 {{ page_obj.number }} 页，共 {{ page_obj.paginator.num_pages }} 页
+                    </span>
+                    
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if request.GET %}&{{ request.GET.urlencode }}{% endif %}">下一页</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}{% if request.GET %}&{{ request.GET.urlencode }}{% endif %}">末页</a>
+                    {% endif %}
+                </span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

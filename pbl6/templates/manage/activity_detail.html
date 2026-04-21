@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ activity.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header a {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+        .btn-edit {
+            background-color: #0066cc;
+            color: white;
+        }
+        .btn-edit:hover {
+            background-color: #0052a3;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+        .activity-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .activity-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .status-draft {
+            background-color: #ffc107;
+            color: #333;
+        }
+        .status-published {
+            background-color: #28a745;
+            color: white;
+        }
+        .status-cancelled {
+            background-color: #dc3545;
+            color: white;
+        }
+        .activity-info {
+            margin-bottom: 20px;
+        }
+        .activity-info h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .info-label {
+            width: 120px;
+            font-weight: bold;
+            color: #666;
+        }
+        .info-value {
+            flex: 1;
+        }
+        .activity-description {
+            margin-top: 20px;
+        }
+        .activity-description h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .activity-description p {
+            line-height: 1.6;
+        }
+        .poster-section {
+            margin-top: 20px;
+        }
+        .poster-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .poster-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .registration-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .registration-section h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .registration-info {
+            margin-bottom: 20px;
+        }
+        .registration-form {
+            margin-top: 20px;
+        }
+        .registration-form button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .registration-form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ activity.title }}</h1>
+            <div>
+                <a href="{% url 'activity-list' %}" class="btn-back">返回活动列表</a>
+                <a href="{% url 'activity-edit' activity.id %}" class="btn-edit">编辑活动</a>
+                <a href="{% url 'activity-delete' activity.id %}" class="btn-delete">删除活动</a>
+            </div>
+        </div>
+        
+        <div class="activity-card">
+            <span class="activity-status {% if activity.status == 'draft' %}status-draft{% elif activity.status == 'published' %}status-published{% else %}status-cancelled{% endif %}">{{ activity.get_status_display }}</span>
+            
+            <div class="activity-info">
+                <h2>活动详情</h2>
+                <div class="info-row">
+                    <div class="info-label">开始时间:</div>
+                    <div class="info-value">{{ activity.start_time }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">结束时间:</div>
+                    <div class="info-value">{{ activity.end_time }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">地点:</div>
+                    <div class="info-value">{{ activity.location }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">活动类型:</div>
+                    <div class="info-value">{{ activity.activity_type }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">最大参与人数:</div>
+                    <div class="info-value">{% if activity.max_participants > 0 %}{{ activity.max_participants }}{% else %}无限制{% endif %}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">发布者:</div>
+                    <div class="info-value">{{ activity.created_by.username }}</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">发布时间:</div>
+                    <div class="info-value">{{ activity.created_at }}</div>
+                </div>
+            </div>
+            
+            <div class="activity-description">
+                <h3>描述</h3>
+                <p>{{ activity.description }}</p>
+            </div>
+            
+            {% if activity.poster_url %}
+            <div class="poster-section">
+                <h3>海报</h3>
+                <img src="{{ activity.poster_url }}" alt="活动海报" class="poster-image">
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="registration-section">
+            <h2>报名信息</h2>
+            <div class="registration-info">
+                <p><strong>当前报名人数:</strong> {{ registration_count }}</p>
+                {% if activity.max_participants > 0 %}
+                <p><strong>剩余名额:</strong> {{ remaining_slots }}</p>
+                {% endif %}
+            </div>
+            
+            {% if registration_status %}
+            <p><strong>您的报名状态:</strong> {{ registration_status }}</p>
+            {% else %}
+            <div class="registration-form">
+                <form method="post" action="{% url 'activity-register' activity.id %}">
+                    {% csrf_token %}
+                    <button type="submit">报名参加</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
