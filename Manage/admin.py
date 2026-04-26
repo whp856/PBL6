@@ -1,8 +1,9 @@
 from django.contrib import admin
-from .models import User, Activity, ActivityRegistration
+from user.models import User
+from .models import Activity, ActivityRegistration
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'email', 'role', 'created_at')
+    list_display = ('email', 'username', 'role', 'created_at')
     list_filter = ('role', 'created_at')
     search_fields = ('username', 'email')
     ordering = ('-created_at',)

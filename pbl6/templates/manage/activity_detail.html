@@ -5,156 +5,322 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ activity.title }}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #d4a5a5 0%, #a8b5a8 50%, #a8a8b5 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        .decoration {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 8s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .decoration-1 {
+            width: 400px;
+            height: 400px;
+            background: #d4a5a5;
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .decoration-2 {
+            width: 300px;
+            height: 300px;
+            background: #a8b5a8;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 2s;
+        }
+
+        .decoration-3 {
+            width: 200px;
+            height: 200px;
+            background: #b5a8a8;
+            top: 50%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+            75% {
+                transform: translate(20px, 30px) scale(1.05);
+            }
+        }
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
-        h1 {
-            color: #333;
-        }
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
+
+        .header h1 {
+            color: #5c5c5c;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .header div {
+            display: flex;
+            gap: 15px;
+        }
+
         .header a {
             display: inline-block;
             padding: 10px 15px;
-            border-radius: 4px;
+            border-radius: 12px;
             text-decoration: none;
             font-size: 14px;
-            margin-left: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
+
         .btn-back {
-            background-color: #6c757d;
+            background: linear-gradient(135deg, #a8a8b5 0%, #8f8fa8 100%);
             color: white;
         }
+
         .btn-back:hover {
-            background-color: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(168, 168, 181, 0.3);
         }
+
         .btn-edit {
-            background-color: #0066cc;
+            background: linear-gradient(135deg, #a8b5a8 0%, #8fa88f 100%);
             color: white;
         }
+
         .btn-edit:hover {
-            background-color: #0052a3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(168, 181, 168, 0.3);
         }
+
         .btn-delete {
-            background-color: #dc3545;
+            background: linear-gradient(135deg, #d4a5a5 0%, #a88b8b 100%);
             color: white;
         }
+
         .btn-delete:hover {
-            background-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 165, 165, 0.3);
         }
+
         .activity-card {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f0 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
+
         .activity-status {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 8px 15px;
             border-radius: 15px;
             font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            font-weight: 600;
+            margin-bottom: 25px;
         }
+
         .status-draft {
             background-color: #ffc107;
             color: #333;
         }
+
         .status-published {
             background-color: #28a745;
             color: white;
         }
+
         .status-cancelled {
             background-color: #dc3545;
             color: white;
         }
+
         .activity-info {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
+
         .activity-info h2 {
             margin-top: 0;
-            color: #333;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+            color: #5c5c5c;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-bottom: 2px solid #e8e8e8;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
         }
+
         .info-row {
             display: flex;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            align-items: center;
         }
+
         .info-label {
-            width: 120px;
-            font-weight: bold;
-            color: #666;
+            width: 140px;
+            font-weight: 600;
+            color: #8b8b8b;
         }
+
         .info-value {
             flex: 1;
+            color: #5c5c5c;
+            line-height: 1.5;
         }
+
         .activity-description {
-            margin-top: 20px;
+            margin-top: 30px;
         }
+
         .activity-description h3 {
             margin-top: 0;
-            color: #333;
+            color: #5c5c5c;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
+
         .activity-description p {
             line-height: 1.6;
+            color: #5c5c5c;
         }
+
         .poster-section {
-            margin-top: 20px;
+            margin-top: 30px;
         }
+
         .poster-section h3 {
             margin-top: 0;
-            color: #333;
+            color: #5c5c5c;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
         }
+
         .poster-image {
             max-width: 100%;
             height: auto;
-            border-radius: 4px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+
         .registration-section {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f0 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+
         .registration-section h2 {
             margin-top: 0;
-            color: #333;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-        .registration-info {
+            color: #5c5c5c;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-bottom: 2px solid #e8e8e8;
+            padding-bottom: 15px;
             margin-bottom: 20px;
         }
+
+        .registration-info {
+            margin-bottom: 25px;
+        }
+
+        .registration-info p {
+            margin-bottom: 10px;
+            color: #5c5c5c;
+            font-weight: 500;
+        }
+
         .registration-form {
-            margin-top: 20px;
+            margin-top: 25px;
         }
+
         .registration-form button {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #a8b5a8 0%, #8fa88f 100%);
             color: white;
-            padding: 10px 15px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 4px;
+            border-radius: 12px;
             cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
+
         .registration-form button:hover {
-            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(168, 181, 168, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .header div {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .header a {
+                flex: 1;
+                text-align: center;
+            }
+
+            .info-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .info-label {
+                width: 100%;
+            }
+
+            .activity-card,
+            .registration-section {
+                padding: 30px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+    <div class="decoration decoration-3"></div>
+
     <div class="container">
         <div class="header">
             <h1>{{ activity.title }}</h1>

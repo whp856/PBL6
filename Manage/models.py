@@ -1,13 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-
-class User(AbstractUser):
-    role = models.CharField(max_length=50, default='user')
-    avatar = models.CharField(max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.username
+from django.conf import settings
 
 class Activity(models.Model):
     STATUS_CHOICES = [
@@ -25,7 +17,7 @@ class Activity(models.Model):
     poster_url = models.CharField(max_length=255, blank=True, null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
     activity_type = models.CharField(max_length=100, default='general')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_activities')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='created_activities')
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
@@ -33,7 +25,7 @@ class Activity(models.Model):
 
 class ActivityRegistration(models.Model):
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     registered_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=50, default='pending')
     

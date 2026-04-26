@@ -345,8 +345,8 @@
         <div class="navbar-brand">校园活动平台</div>
         <div class="navbar-menu">
             <a href="/home/">首页</a>
-            <a href="/activities/">活动列表</a>
-            <a href="/profile/">个人中心</a>
+            <a href="/Manage/activities/">活动列表</a>
+            <a href="/Manage/profile/">个人中心</a>
             <div id="userArea"></div>
         </div>
     </nav>
@@ -493,6 +493,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
+                    credentials: 'include',
                     body: JSON.stringify({ old_password: oldPassword, new_password: newPassword }),
                 });
                 const data = await response.json();

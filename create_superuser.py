@@ -5,7 +5,7 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pbl6.settings')
 django.setup()
 
-from pbl6.Manage.models import User
+from user.models import User
 
 # 检查是否已存在超级用户
 if not User.objects.filter(is_superuser=True).exists():

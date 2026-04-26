@@ -1,1 +1,0 @@
-default_app_config = 'pbl6.Manage.apps.ManageConfig'

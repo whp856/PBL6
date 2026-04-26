@@ -5,109 +5,257 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if activity %}编辑活动{% else %}发布活动{% endif %}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #d4a5a5 0%, #a8b5a8 50%, #a8a8b5 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .decoration {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 8s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .decoration-1 {
+            width: 400px;
+            height: 400px;
+            background: #d4a5a5;
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .decoration-2 {
+            width: 300px;
+            height: 300px;
+            background: #a8b5a8;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 2s;
+        }
+
+        .decoration-3 {
+            width: 200px;
+            height: 200px;
+            background: #b5a8a8;
+            top: 50%;
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+            75% {
+                transform: translate(20px, 30px) scale(1.05);
+            }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f0 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
         h1 {
-            color: #333;
+            color: #5c5c5c;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
         }
+
         form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
-        div {
-            margin-bottom: 15px;
+
+        .form-group {
+            margin-bottom: 0;
         }
+
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #5c5c5c;
         }
+
         input[type="text"],
         input[type="datetime-local"],
         input[type="number"],
         textarea,
         select {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px 15px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            color: #5c5c5c;
+            background: #fafafa;
+            outline: none;
+            transition: all 0.3s ease;
         }
+
+        input[type="text"]:focus,
+        input[type="datetime-local"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #a8b5a8;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(168, 181, 168, 0.1);
+        }
+
         textarea {
             resize: vertical;
+            min-height: 120px;
         }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
         button {
-            background-color: #4CAF50;
+            flex: 1;
+            background: linear-gradient(135deg, #a8b5a8 0%, #8fa88f 100%);
             color: white;
-            padding: 10px 15px;
+            padding: 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 12px;
             cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
+
         button:hover {
-            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(168, 181, 168, 0.3);
         }
+
         a {
+            flex: 1;
             display: inline-block;
-            margin-top: 15px;
-            color: #0066cc;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fff;
+            color: #8b8b8b;
             text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
+
         a:hover {
-            text-decoration: underline;
+            border-color: #a8b5a8;
+            color: #5c5c5c;
+            background: #fafafa;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>{% if activity %}编辑活动{% else %}发布活动{% endif %}</h1>
-    
-    <form method="post">
-        {% csrf_token %}
-        <div>
-            <label for="title">标题:</label>
-            <input type="text" id="title" name="title" value="{{ activity.title|default:'' }}" required>
-        </div>
-        <div>
-            <label for="description">描述:</label>
-            <textarea id="description" name="description" rows="5" required>{{ activity.description|default:'' }}</textarea>
-        </div>
-        <div>
-            <label for="start_time">开始时间:</label>
-            <input type="datetime-local" id="start_time" name="start_time" value="{{ activity.start_time|date:'Y-m-d\TH:i'|default:'' }}" required>
-        </div>
-        <div>
-            <label for="end_time">结束时间:</label>
-            <input type="datetime-local" id="end_time" name="end_time" value="{{ activity.end_time|date:'Y-m-d\TH:i'|default:'' }}" required>
-        </div>
-        <div>
-            <label for="location">地点:</label>
-            <input type="text" id="location" name="location" value="{{ activity.location|default:'' }}" required>
-        </div>
-        <div>
-            <label for="max_participants">最大参与人数:</label>
-            <input type="number" id="max_participants" name="max_participants" min="0" value="{{ activity.max_participants|default:0 }}">
-        </div>
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+    <div class="decoration decoration-3"></div>
 
-        <div>
-            <label for="status">状态:</label>
-            <select id="status" name="status">
-                <option value="draft" {% if activity.status == 'draft' %}selected{% endif %}>草稿</option>
-                <option value="published" {% if activity.status == 'published' %}selected{% endif %}>已发布</option>
-                <option value="cancelled" {% if activity.status == 'cancelled' %}selected{% endif %}>已取消</option>
-            </select>
+    <div class="container">
+        <div class="card">
+            <h1>{% if activity %}编辑活动{% else %}发布活动{% endif %}</h1>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">标题:</label>
+                    <input type="text" id="title" name="title" value="{{ activity.title|default:'' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">描述:</label>
+                    <textarea id="description" name="description" rows="5" required>{{ activity.description|default:'' }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="start_time">开始时间:</label>
+                    <input type="datetime-local" id="start_time" name="start_time" value="{{ activity.start_time|date:'Y-m-d\TH:i'|default:'' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="end_time">结束时间:</label>
+                    <input type="datetime-local" id="end_time" name="end_time" value="{{ activity.end_time|date:'Y-m-d\TH:i'|default:'' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">地点:</label>
+                    <input type="text" id="location" name="location" value="{{ activity.location|default:'' }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="max_participants">最大参与人数:</label>
+                    <input type="number" id="max_participants" name="max_participants" min="0" value="{{ activity.max_participants|default:0 }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="status">状态:</label>
+                    <select id="status" name="status">
+                        <option value="draft" {% if activity.status == 'draft' %}selected{% endif %}>草稿</option>
+                        <option value="published" {% if activity.status == 'published' %}selected{% endif %}>已发布</option>
+                        <option value="cancelled" {% if activity.status == 'cancelled' %}selected{% endif %}>已取消</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="activity_type">活动类型:</label>
+                    <input type="text" id="activity_type" name="activity_type" value="{{ activity.activity_type|default:'general' }}">
+                </div>
+                <div class="button-group">
+                    <button type="submit">保存活动</button>
+                    <a href="{% if activity %}{% url 'activity-detail' activity.id %}{% else %}{% url 'activity-list' %}{% endif %}">返回</a>
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="activity_type">活动类型:</label>
-            <input type="text" id="activity_type" name="activity_type" value="{{ activity.activity_type|default:'general' }}">
-        </div>
-        <button type="submit">保存活动</button>
-    </form>
-    
-    <a href="{% if activity %}{% url 'activity-detail' activity.id %}{% else %}{% url 'activity-list' %}{% endif %}">返回</a>
+    </div>
 </body>
 </html>
