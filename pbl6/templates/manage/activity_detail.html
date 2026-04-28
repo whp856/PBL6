@@ -282,6 +282,240 @@
             box-shadow: 0 8px 20px rgba(168, 181, 168, 0.3);
         }
 
+        .success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .success-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .success-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f0 100%);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .success-modal.active .success-content {
+            transform: translateY(0);
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #5c5c5c;
+            margin-bottom: 15px;
+        }
+
+        .success-message {
+            font-size: 1rem;
+            color: #8b8b8b;
+            margin-bottom: 25px;
+        }
+
+        .success-btn {
+            background: linear-gradient(135deg, #a8b5a8 0%, #8fa88f 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .success-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(168, 181, 168, 0.3);
+        }
+
+        .btn-unregister {
+            background: linear-gradient(135deg, #d4a5a5 0%, #a88b8b 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-unregister:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 165, 165, 0.3);
+        }
+
+        .unregister-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .unregister-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .unregister-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f0 100%);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            max-width: 400px;
+        }
+
+        .unregister-modal.active .unregister-content {
+            transform: translateY(0);
+        }
+
+        .unregister-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .unregister-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #5c5c5c;
+            margin-bottom: 15px;
+        }
+
+        .unregister-message {
+            font-size: 1rem;
+            color: #8b8b8b;
+            margin-bottom: 25px;
+        }
+
+        .unregister-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-cancel {
+            background: linear-gradient(135deg, #a8a8b5 0%, #8f8fa8 100%);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(168, 168, 181, 0.3);
+        }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, #d4a5a5 0%, #a88b8b 100%);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 165, 165, 0.3);
+        }
+
+        .cancel-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cancel-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f0 100%);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .cancel-modal.active .cancel-content {
+            transform: translateY(0);
+        }
+
+        .cancel-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .cancel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #5c5c5c;
+            margin-bottom: 15px;
+        }
+
+        .cancel-message {
+            font-size: 1rem;
+            color: #8b8b8b;
+            margin-bottom: 25px;
+        }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -320,6 +554,39 @@
     <div class="decoration decoration-1"></div>
     <div class="decoration decoration-2"></div>
     <div class="decoration decoration-3"></div>
+
+    <!-- 报名成功提示框 -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">✅</div>
+            <h2 class="success-title">报名成功</h2>
+            <p class="success-message">您已成功报名参加此活动，期待您的参与！</p>
+            <button class="success-btn" onclick="closeSuccessModal()">确定</button>
+        </div>
+    </div>
+
+    <!-- 取消报名确认框 -->
+    <div class="unregister-modal" id="unregisterModal">
+        <div class="unregister-content">
+            <div class="unregister-icon">⚠️</div>
+            <h3 class="unregister-title">确认取消报名</h3>
+            <p class="unregister-message">您确定要取消报名此活动吗？取消后将不再参加该活动。</p>
+            <div class="unregister-buttons">
+                <button class="btn-cancel" onclick="closeUnregisterModal()">取消</button>
+                <button class="btn-confirm" id="confirmUnregister">确认取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 取消报名成功提示框 -->
+    <div class="cancel-modal" id="cancelModal">
+        <div class="cancel-content">
+            <div class="cancel-icon">✅</div>
+            <h2 class="cancel-title">取消报名成功</h2>
+            <p class="cancel-message">您已成功取消报名，期待您下次参与！</p>
+            <button class="success-btn" onclick="closeCancelModal()">确定</button>
+        </div>
+    </div>
 
     <div class="container">
         <div class="header">
@@ -390,9 +657,15 @@
             
             {% if registration_status %}
             <p><strong>您的报名状态:</strong> {{ registration_status }}</p>
+            <div class="unregister-form">
+                <form method="post" action="{% url 'activity-unregister' activity.id %}" id="unregisterForm">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-unregister">取消报名</button>
+                </form>
+            </div>
             {% else %}
             <div class="registration-form">
-                <form method="post" action="{% url 'activity-register' activity.id %}">
+                <form method="post" action="{% url 'activity-register' activity.id %}" id="registrationForm">
                     {% csrf_token %}
                     <button type="submit">报名参加</button>
                 </form>
@@ -400,5 +673,122 @@
             {% endif %}
         </div>
     </div>
+
+    <script>
+        const registrationForm = document.getElementById('registrationForm');
+        const successModal = document.getElementById('successModal');
+        const unregisterForm = document.getElementById('unregisterForm');
+        const unregisterModal = document.getElementById('unregisterModal');
+        const cancelModal = document.getElementById('cancelModal');
+        const confirmUnregisterBtn = document.getElementById('confirmUnregister');
+
+        function showSuccessModal() {
+            successModal.classList.add('active');
+        }
+
+        function closeSuccessModal() {
+            successModal.classList.remove('active');
+        }
+
+        function showUnregisterModal() {
+            unregisterModal.classList.add('active');
+        }
+
+        function closeUnregisterModal() {
+            unregisterModal.classList.remove('active');
+        }
+
+        function showCancelModal() {
+            cancelModal.classList.add('active');
+        }
+
+        function closeCancelModal() {
+            cancelModal.classList.remove('active');
+        }
+
+        if (registrationForm) {
+            registrationForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = new FormData(registrationForm);
+                const csrfToken = registrationForm.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+                try {
+                    const response = await fetch('{% url "activity-register" activity.id %}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken,
+                        },
+                        body: formData,
+                    });
+
+                    if (response.ok) {
+                        showSuccessModal();
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        const data = await response.json();
+                        alert('报名失败: ' + (data.message || '未知错误'));
+                    }
+                } catch (error) {
+                    alert('报名失败，请检查网络连接');
+                }
+            });
+        }
+
+        if (unregisterForm) {
+            unregisterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                showUnregisterModal();
+            });
+        }
+
+        if (confirmUnregisterBtn) {
+            confirmUnregisterBtn.addEventListener('click', async () => {
+                const csrfToken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+                try {
+                    const response = await fetch('{% url "activity-unregister" activity.id %}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken,
+                        },
+                    });
+
+                    if (response.ok) {
+                        closeUnregisterModal();
+                        showCancelModal();
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        const data = await response.json();
+                        alert('取消报名失败: ' + (data.message || '未知错误'));
+                    }
+                } catch (error) {
+                    alert('取消报名失败，请检查网络连接');
+                }
+            });
+        }
+
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                closeSuccessModal();
+            }
+        });
+
+        unregisterModal.addEventListener('click', (e) => {
+            if (e.target === unregisterModal) {
+                closeUnregisterModal();
+            }
+        });
+
+        cancelModal.addEventListener('click', (e) => {
+            if (e.target === cancelModal) {
+                closeCancelModal();
+            }
+        });
+    </script>
 </body>
 </html>

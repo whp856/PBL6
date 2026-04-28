@@ -30,6 +30,7 @@ urlpatterns = [
     path('Manage/activities/<int:pk>/edit/', Manage_views.activity_edit, name='activity-edit'),
     path('Manage/activities/<int:pk>/delete/', Manage_views.activity_delete, name='activity-delete'),
     path('Manage/activities/<int:pk>/register/', Manage_views.activity_register, name='activity-register'),
+    path('Manage/activities/<int:pk>/unregister/', Manage_views.activity_unregister, name='activity-unregister'),
     # 个人信息页面
     path('Manage/profile/', Manage_views.profile, name='profile'),  
 ]

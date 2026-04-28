@@ -239,19 +239,21 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="status">状态:</label>
-                    <select id="status" name="status">
-                        <option value="draft" {% if activity.status == 'draft' %}selected{% endif %}>草稿</option>
-                        <option value="published" {% if activity.status == 'published' %}selected{% endif %}>已发布</option>
-                        <option value="cancelled" {% if activity.status == 'cancelled' %}selected{% endif %}>已取消</option>
+                    <label for="activity_type">活动类型:</label>
+                    <select id="activity_type" name="activity_type">
+                        <option value="学术讲座" {% if activity.activity_type == '学术讲座' %}selected{% endif %}>学术讲座</option>
+                        <option value="体育运动" {% if activity.activity_type == '体育运动' %}selected{% endif %}>体育运动</option>
+                        <option value="文艺演出" {% if activity.activity_type == '文艺演出' %}selected{% endif %}>文艺演出</option>
+                        <option value="科技创新" {% if activity.activity_type == '科技创新' %}selected{% endif %}>科技创新</option>
+                        <option value="社会实践" {% if activity.activity_type == '社会实践' %}selected{% endif %}>社会实践</option>
+                        <option value="志愿服务" {% if activity.activity_type == '志愿服务' %}selected{% endif %}>志愿服务</option>
+                        <option value="创业竞赛" {% if activity.activity_type == '创业竞赛' %}selected{% endif %}>创业竞赛</option>
+                        <option value="其他" {% if activity.activity_type == '其他' or activity.activity_type == 'general' or not activity.activity_type %}selected{% endif %}>其他</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="activity_type">活动类型:</label>
-                    <input type="text" id="activity_type" name="activity_type" value="{{ activity.activity_type|default:'general' }}">
-                </div>
                 <div class="button-group">
-                    <button type="submit">保存活动</button>
+                    <button type="submit" name="action" value="publish">发布活动</button>
+                    <button type="submit" name="action" value="save_draft">暂时保存</button>
                     <a href="{% if activity %}{% url 'activity-detail' activity.id %}{% else %}{% url 'activity-list' %}{% endif %}">返回</a>
                 </div>
             </form>

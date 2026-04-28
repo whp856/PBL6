@@ -15,7 +15,225 @@
             min-height: 100vh;
             background: linear-gradient(135deg, #d4a5a5 0%, #a8b5a8 50%, #a8a8b5 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
+            padding-top: 70px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #5c5c5c;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: #a8b5a8;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .navbar-menu a {
+            text-decoration: none;
+            color: #5c5c5c;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: #a8b5a8;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #a8b5a8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #5c5c5c;
+        }
+
+        .user-role {
+            font-size: 0.85rem;
+            color: #8b8b8b;
+        }
+
+        .logout-btn {
+            padding: 8px 20px;
+            border: 2px solid #a8b5a8;
+            border-radius: 8px;
+            background: transparent;
+            color: #a8b5a8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #a8b5a8;
+            color: white;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 6px 15px;
+            border: 1px solid #a8b5a8;
+            border-radius: 6px;
+            background: transparent;
+            color: #a8b5a8;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #a8b5a8;
+            color: white;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f0 100%);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #5c5c5c;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #a8b5a8 0%, #8fa88f 100%);
+            color: #fff;
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(168, 181, 168, 0.3);
+        }
+
+        .modal-btn-secondary {
+            background: #f5f5f0;
+            color: #5c5c5c;
+            border: 2px solid #e0e0e0;
+        }
+
+        .modal-btn-secondary:hover {
+            background: #e8e8e8;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: #5c5c5c;
+            background: #fafafa;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #a8b5a8;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(168, 181, 168, 0.1);
         }
 
         .decoration {
@@ -372,6 +590,139 @@
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <a href="/home/" class="navbar-brand">校园活动平台</a>
+        <div class="navbar-menu">
+            <a href="/home/">首页</a>
+            <a href="/Manage/activities/">活动列表</a>
+            <a href="/Manage/profile/">个人中心</a>
+            <div id="userArea"></div>
+        </div>
+    </nav>
+
+    <!-- 修改密码模态框 -->
+    <div class="modal" id="changePasswordModal">
+        <div class="modal-content">
+            <h2 class="modal-title">修改密码</h2>
+            <form class="modal-form" id="changePasswordForm">
+                <div class="input-group">
+                    <input type="password" class="input-field" placeholder="原密码" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" class="input-field" placeholder="新密码" required>
+                </div>
+                <button type="submit" class="modal-btn modal-btn-primary">修改密码</button>
+                <div class="modal-footer">
+                    <button type="button" class="modal-btn modal-btn-secondary" id="closeChangeModal">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const userAreaDiv = document.getElementById('userArea');
+        const changePasswordModal = document.getElementById('changePasswordModal');
+        const changePasswordForm = document.getElementById('changePasswordForm');
+        const closeChangeModal = document.getElementById('closeChangeModal');
+
+        function updateNavbar(user) {
+            const roleNames = {
+                'user': '普通用户',
+                'organizer': '活动组织者',
+                'admin': '管理员'
+            };
+
+            userAreaDiv.innerHTML = `
+                <div class="user-info">
+                    <div class="user-avatar">${user.username.charAt(0).toUpperCase()}</div>
+                    <div class="user-details">
+                        <span class="user-name">${user.username}</span>
+                        <span class="user-role">${roleNames[user.role] || '普通用户'}</span>
+                    </div>
+                    <div class="user-actions">
+                        <button class="action-btn" onclick="openChangePasswordModal()">修改密码</button>
+                        <button class="action-btn" onclick="logout()">退出</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openChangePasswordModal() {
+            changePasswordModal.classList.add('active');
+        }
+
+        closeChangeModal.addEventListener('click', () => {
+            changePasswordModal.classList.remove('active');
+        });
+
+        changePasswordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const oldPassword = changePasswordForm.querySelectorAll('input[type="password"]')[0].value;
+            const newPassword = changePasswordForm.querySelectorAll('input[type="password"]')[1].value;
+
+            try {
+                const response = await fetch('/api/accounts/change-password/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ old_password: oldPassword, new_password: newPassword }),
+                });
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    alert('密码修改成功');
+                    changePasswordModal.classList.remove('active');
+                } else {
+                    alert('修改密码失败: ' + data.message);
+                }
+            } catch (error) {
+                alert('修改密码失败，请检查网络连接');
+            }
+        });
+
+        async function logout() {
+            try {
+                const response = await fetch('/api/accounts/logout/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                localStorage.removeItem('user');
+                window.location.href = '/';
+            } catch (error) {
+                localStorage.removeItem('user');
+                window.location.href = '/';
+            }
+        }
+
+        changePasswordModal.addEventListener('click', (e) => {
+            if (e.target === changePasswordModal) {
+                changePasswordModal.classList.remove('active');
+            }
+        });
+
+        async function checkLoginStatus() {
+            try {
+                const userData = localStorage.getItem('user');
+                if (!userData) {
+                    userAreaDiv.innerHTML = '<a href="/">登录</a>';
+                    return;
+                }
+
+                const user = JSON.parse(userData);
+                updateNavbar(user);
+            } catch (error) {
+                userAreaDiv.innerHTML = '<a href="/">登录</a>';
+            }
+        }
+
+        checkLoginStatus();
+    </script>
+
     <div class="decoration decoration-1"></div>
     <div class="decoration decoration-2"></div>
     <div class="decoration decoration-3"></div>
